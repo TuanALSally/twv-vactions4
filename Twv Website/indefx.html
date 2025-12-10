@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Night Life Experience - TWV</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: #ffffff;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        
+        /* Header Styles */
+        .header-container {
+            position: relative;
+            width: 100%;
+            height: 70vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }
+
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 0;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .tagline {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .description {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .navigation {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 2;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Package Detail Section */
+        .package-detail-section {
+            padding: 80px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #2c3e50, #3498db);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .package-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            margin: 50px 0;
+            align-items: start;
+        }
+
+        .package-image {
+            width: 100%;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .package-image img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+
+        .package-info {
+            padding: 20px 0;
+        }
+
+        .package-title {
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #2c3e50;
+        }
+
+        .package-description {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #555;
+            margin-bottom: 25px;
+        }
+
+        .package-highlights {
+            margin: 30px 0;
+        }
+
+        .highlight-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: #2c3e50;
+        }
+
+        .highlight-list {
+            list-style-type: none;
+        }
+
+        .highlight-list li {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+        }
+
+        .highlight-list li:before {
+            content: "✓";
+            color: #4ECDC4;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 1.2rem;
+        }
+
+        .package-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #FF6B6B;
+            margin: 20px 0;
+        }
+
+        .book-now-btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #FF6B6B, #FF8E8E);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            border: none;
+            cursor: pointer;
+        }
+
+        .book-now-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Itinerary Section */
+        .itinerary-section {
+            padding: 60px 20px;
+            background: #f8f9fa;
+        }
+
+        .itinerary-title {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: #2c3e50;
+        }
+
+        .itinerary-days {
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .day {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .day-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2c3e50;
+        }
+
+        .day-number {
+            background: #FF6B6B;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .day-activities {
+            list-style-type: none;
+        }
+
+        .day-activities li {
+            padding: 10px 0;
+            border-bottom: 1px solid #f0f0f0;
+            display: flex;
+            align-items: center;
+        }
+
+        .day-activities li:before {
+            content: "•";
+            color: #FF6B6B;
+            font-weight: bold;
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+
+        /* Sliding Cards Section */
+        .sliding-cards-section {
+            padding: 80px 20px;
+            background: #ffffff;
+            overflow: hidden;
+        }
+
+        .sliding-title {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 40px;
+            color: #2c3e50;
+        }
+
+        .cards-slider-container {
+            position: relative;
+            max-width: 1400px;
+            margin: 0 auto;
+            overflow: hidden;
+        }
+
+        .cards-track {
+            display: flex;
+            transition: transform 0.5s ease;
+            gap: 25px;
+        }
+
+        .slider-card {
+            flex: 0 0 300px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            height: 350px;
+        }
+
+        .slider-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .slider-card-image {
+            height: 180px;
+            overflow: hidden;
+        }
+
+        .slider-card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .slider-card:hover .slider-card-image img {
+            transform: scale(1.05);
+        }
+
+        .slider-card-content {
+            padding: 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slider-card-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            color: #2c3e50;
+        }
+
+        .slider-card-description {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            margin-bottom: 15px;
+            flex-grow: 1;
+        }
+
+        .slider-card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .slider-card-price {
+            font-weight: 700;
+            color: #FF6B6B;
+        }
+
+        .view-details-btn {
+            display: inline-block;
+            background: #4ECDC4;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+        }
+
+        .view-details-btn:hover {
+            background: #3db8af;
+        }
+
+        .slider-nav {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #ddd;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        .slider-dot.active {
+            background: #FF6B6B;
+        }
+
+        /* Footer Styles */
+        footer {
+            background: #2c3e50;
+            padding: 40px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content { 
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: #b0b0c0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .copyright {
+            color: #b0b0c0;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .package-content {
+                grid-template-columns: 1fr;
+                gap: 30px;
+            }
+
+            .tagline {
+                font-size: 2rem;
+            }
+
+            .description {
+                font-size: 1.2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                right: 20px;
+                background: rgba(0, 0, 0, 0.8);
+                padding: 15px;
+                border-radius: 10px;
+                width: 200px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .logo {
+                font-size: 2rem;
+            }
+
+            .package-title {
+                font-size: 1.8rem;
+            }
+
+            .slider-card {
+                flex: 0 0 280px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header-container {
+                height: 60vh;
+            }
+
+            .tagline {
+                font-size: 1.5rem;
+            }
+
+            .description {
+                font-size: 1rem;
+            }
+
+            .package-title {
+                font-size: 1.6rem;
+            }
+
+            .slider-card {
+                flex: 0 0 260px;
+                height: 320px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section -->
+    <header class="header-container">
+        <video class="video-background" autoplay muted loop>
+            <source src="1.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="overlay"></div>
+        <nav class="navigation">
+            <div class="logo">TWV</div>
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="index.html">Packages</a>
+                <a href="index.html">About Us</a>
+                <a href="#">Reviews</a>
+                <a href="#">Contact</a>
+            </div>
+            <button class="mobile-menu-btn">☰</button>
+        </nav>
+        
+        <div class="content">
+            <h1 class="tagline">Night Life Experience</h1>
+            <p class="description">Explore the vibrant nightlife with games, music, and unforgettable rides</p>
+        </div>
+    </header>
+
+    <!-- Package Detail Section -->
+    <section class="package-detail-section">
+        <div class="container">
+            <div class="package-content">
+                <div class="package-image">
+                    <img src="https://images.unsplash.com/photo-1533174072545-7a4b6ad7a6c3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Night Life Experience">
+                </div>
+                <div class="package-info">
+                    <h2 class="package-title">Night Life Experience</h2>
+                    <p class="package-description">
+                        Experience the most electrifying nightlife across multiple destinations. From Sri Lanka's beach parties to Dubai's luxury clubs and Thailand's famous full moon parties. Our Night Life Experience package takes you on an unforgettable journey through the world's most vibrant after-dark scenes.
+                    </p>
+                    <p class="package-description">
+                        Whether you're dancing under the stars at a beach party, enjoying premium cocktails at a rooftop bar, or experiencing the energy of a world-famous nightclub, our expertly curated itinerary ensures you'll have the time of your life.
+                    </p>
+                    
+                    <div class="package-highlights">
+                        <h3 class="highlight-title">Package Highlights</h3>
+                        <ul class="highlight-list">
+                            <li>VIP access to top nightclubs in each destination</li>
+                            <li>Beach parties with international DJs</li>
+                            <li>Luxury club experiences in Dubai</li>
+                            <li>Full Moon Party in Thailand</li>
+                            <li>Professional guides and security</li>
+                            <li>Complimentary drinks at selected venues</li>
+                            <li>Transportation between venues</li>
+                            <li>24/7 customer support</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="package-price">From $1,299 per person</div>
+                    <button class="book-now-btn">Book Now</button>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Itinerary Section -->
+    <section class="itinerary-section">
+        <div class="container">
+            <h2 class="itinerary-title">Tour Itinerary</h2>
+            <div class="itinerary-days">
+                <div class="day">
+                    <div class="day-header">
+                        <h3 class="day-title">Arrival & Welcome Party</h3>
+                        <div class="day-number">1</div>
+                    </div>
+                    <ul class="day-activities">
+                        <li>Arrival at destination and hotel check-in</li>
+                        <li>Welcome briefing with your tour guide</li>
+                        <li>Sunset cocktails at a beachfront bar</li>
+                        <li>Welcome dinner at a trendy restaurant</li>
+                        <li>Nightclub experience with VIP access</li>
+                    </ul>
+                </div>
+                
+                <div class="day">
+                    <div class="day-header">
+                        <h3 class="day-title">Beach Party Experience</h3>
+                        <div class="day-number">2</div>
+                    </div>
+                    <ul class="day-activities">
+                        <li>Day at leisure to relax and explore</li>
+                        <li>Beach party preparation and group activities</li>
+                        <li>Sunset beach party with fire dancers</li>
+                        <li>International DJ performance</li>
+                        <li>Midnight beach bonfire</li>
+                    </ul>
+                </div>
+                
+                <div class="day">
+                    <div class="day-header">
+                        <h3 class="day-title">Luxury Club Night</h3>
+                        <div class="day-number">3</div>
+                    </div>
+                    <ul class="day-activities">
+                        <li>Recovery day with optional spa treatments</li>
+                        <li>Fashionable evening attire preparation</li>
+                        <li>Fine dining experience at a premium restaurant</li>
+                        <li>VIP table service at a luxury nightclub</li>
+                        <li>Champagne toast and bottle service</li>
+                    </ul>
+                </div>
+                
+                <div class="day">
+                    <div class="day-header">
+                        <h3 class="day-title">Full Moon Party</h3>
+                        <div class="day-number">4</div>
+                    </div>
+                    <ul class="day-activities">
+                        <li>Travel to Full Moon Party destination</li>
+                        <li>Beach preparation and body painting</li>
+                        <li>Full Moon Party on the beach</li>
+                        <li>Fire shows and multiple DJ stages</li>
+                        <li>Sunrise beach gathering</li>
+                    </ul>
+                </div>
+                
+                <div class="day">
+                    <div class="day-header">
+                        <h3 class="day-title">Farewell Celebration</h3>
+                        <div class="day-number">5</div>
+                    </div>
+                    <ul class="day-activities">
+                        <li>Recovery brunch and photo sharing</li>
+                        <li>Free time for last-minute shopping</li>
+                        <li>Farewell dinner at a unique venue</li>
+                        <li>Final night out at a local favorite spot</li>
+                        <li>Group photo and memory sharing</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sliding Cards Section -->
+    <section class="sliding-cards-section">
+        <div class="container">
+            <h2 class="sliding-title">Other Amazing Experiences</h2>
+            <div class="cards-slider-container">
+                <div class="cards-track" id="cardsTrack">
+                    <!-- Card 1 -->
+                    <div class="slider-card">
+                        <div class="slider-card-image">
+                            <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1473&q=80" alt="Tropical Beach Getaway">
+                        </div>
+                        <div class="slider-card-content">
+                            <h3 class="slider-card-title">Tropical Beach Getaway</h3>
+                            <p class="slider-card-description">Relax on pristine beaches with crystal clear waters in our exclusive tropical paradise package.</p>
+                            <div class="slider-card-footer">
+                                <div class="slider-card-price">$899</div>
+                                <a href="#" class="view-details-btn">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 2 -->
+                    <div class="slider-card">
+                        <div class="slider-card-image">
+                            <img src="https://images.unsplash.com/photo-1464822759849-e41f06bc6fca?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Mountain Adventure">
+                        </div>
+                        <div class="slider-card-content">
+                            <h3 class="slider-card-title">Mountain Adventure</h3>
+                            <p class="slider-card-description">Challenge yourself with breathtaking mountain trails and stunning natural vistas.</p>
+                            <div class="slider-card-footer">
+                                <div class="slider-card-price">$1,199</div>
+                                <a href="#" class="view-details-btn">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 3 -->
+                    <div class="slider-card">
+                        <div class="slider-card-image">
+                            <img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Cultural Heritage Tour">
+                        </div>
+                        <div class="slider-card-content">
+                            <h3 class="slider-card-title">Cultural Heritage Tour</h3>
+                            <p class="slider-card-description">Discover ancient temples and historical sites with expert guides.</p>
+                            <div class="slider-card-footer">
+                                <div class="slider-card-price">$1,099</div>
+                                <a href="#" class="view-details-btn">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 4 -->
+                    <div class="slider-card">
+                        <div class="slider-card-image">
+                            <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Food & Culinary Tour">
+                        </div>
+                        <div class="slider-card-content">
+                            <h3 class="slider-card-title">Food & Culinary Tour</h3>
+                            <p class="slider-card-description">Taste authentic flavors and learn cooking techniques from local chefs.</p>
+                            <div class="slider-card-footer">
+                                <div class="slider-card-price">$949</div>
+                                <a href="#" class="view-details-btn">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 5 -->
+                    <div class="slider-card">
+                        <div class="slider-card-image">
+                            <img src="https://images.unsplash.com/photo-1544551763-46a013bb70d5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Wellness Retreat">
+                        </div>
+                        <div class="slider-card-content">
+                            <h3 class="slider-card-title">Wellness Retreat</h3>
+                            <p class="slider-card-description">Rejuvenate your mind and body with yoga, meditation, and spa treatments.</p>
+                            <div class="slider-card-footer">
+                                <div class="slider-card-price">$1,349</div>
+                                <a href="#" class="view-details-btn">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 6 -->
+                    <div class="slider-card">
+                        <div class="slider-card-image">
+                            <img src="https://images.unsplash.com/photo-1578662996442-48f60103fc96?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Wildlife Safari">
+                        </div>
+                        <div class="slider-card-content">
+                            <h3 class="slider-card-title">Wildlife Safari</h3>
+                            <p class="slider-card-description">Embark on an unforgettable wildlife adventure through national parks.</p>
+                            <div class="slider-card-footer">
+                                <div class="slider-card-price">$1,599</div>
+                                <a href="#" class="view-details-btn">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 7 -->
+                    <div class="slider-card">
+                        <div class="slider-card-image">
+                            <img src="https://images.unsplash.com/photo-1539635278303-d4002c07eae3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Luxury Island Escape">
+                        </div>
+                        <div class="slider-card-content">
+                            <h3 class="slider-card-title">Luxury Island Escape</h3>
+                            <p class="slider-card-description">Indulge in ultimate luxury with private villas and personalized service.</p>
+                            <div class="slider-card-footer">
+                                <div class="slider-card-price">$2,199</div>
+                                <a href="#" class="view-details-btn">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 8 -->
+                    <div class="slider-card">
+                        <div class="slider-card-image">
+                            <img src="https://images.unsplash.com/photo-1506197603052-3cc9c3a201bd?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Adventure Sports">
+                        </div>
+                        <div class="slider-card-content">
+                            <h3 class="slider-card-title">Adventure Sports</h3>
+                            <p class="slider-card-description">Experience thrilling water sports and outdoor adventures.</p>
+                            <div class="slider-card-footer">
+                                <div class="slider-card-price">$1,099</div>
+                                <a href="#" class="view-details-btn">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 9 -->
+                    <div class="slider-card">
+                        <div class="slider-card-image">
+                            <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Romantic Getaway">
+                        </div>
+                        <div class="slider-card-content">
+                            <h3 class="slider-card-title">Romantic Getaway</h3>
+                            <p class="slider-card-description">Create unforgettable memories with your special someone.</p>
+                            <div class="slider-card-footer">
+                                <div class="slider-card-price">$1,499</div>
+                                <a href="#" class="view-details-btn">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 10 -->
+                    <div class="slider-card">
+                        <div class="slider-card-image">
+                            <img src="https://images.unsplash.com/photo-1539667547529-84b2b9d3b9e3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="City Exploration">
+                        </div>
+                        <div class="slider-card-content">
+                            <h3 class="slider-card-title">City Exploration</h3>
+                            <p class="slider-card-description">Discover the vibrant culture and hidden gems of world-class cities.</p>
+                            <div class="slider-card-footer">
+                                <div class="slider-card-price">$799</div>
+                                <a href="#" class="view-details-btn">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 11 -->
+                    <div class="slider-card">
+                        <div class="slider-card-image">
+                            <img src="https://images.unsplash.com/photo-1516483638261-f4dbaf036963?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Photography Tour">
+                        </div>
+                        <div class="slider-card-content">
+                            <h3 class="slider-card-title">Photography Tour</h3>
+                            <p class="slider-card-description">Capture stunning landscapes and culture with professional guidance.</p>
+                            <div class="slider-card-footer">
+                                <div class="slider-card-price">$1,249</div>
+                                <a href="#" class="view-details-btn">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 12 -->
+                    <div class="slider-card">
+                        <div class="slider-card-image">
+                            <img src="https://images.unsplash.com/photo-1501555088652-021faa106b9b?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Eco Tourism">
+                        </div>
+                        <div class="slider-card-content">
+                            <h3 class="slider-card-title">Eco Tourism</h3>
+                            <p class="slider-card-description">Sustainable travel experiences that minimize environmental impact.</p>
+                            <div class="slider-card-footer">
+                                <div class="slider-card-price">$1,099</div>
+                                <a href="#" class="view-details-btn">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 13 -->
+                    <div class="slider-card">
+                        <div class="slider-card-image">
+                            <img src="https://images.unsplash.com/photo-1518548419970-58e3b4079ab2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Winter Wonderland">
+                        </div>
+                        <div class="slider-card-content">
+                            <h3 class="slider-card-title">Winter Wonderland</h3>
+                            <p class="slider-card-description">Experience the magic of snow-covered landscapes and winter sports.</p>
+                            <div class="slider-card-footer">
+                                <div class="slider-card-price">$1,399</div>
+                                <a href="#" class="view-details-btn">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 14 -->
+                    <div class="slider-card">
+                        <div class="slider-card-image">
+                            <img src="https://images.unsplash.com/photo-1566073771259-6a8506099945?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Desert Adventure">
+                        </div>
+                        <div class="slider-card-content">
+                            <h3 class="slider-card-title">Desert Adventure</h3>
+                            <p class="slider-card-description">Explore vast deserts, ride camels, and camp under the stars.</p>
+                            <div class="slider-card-footer">
+                                <div class="slider-card-price">$1,199</div>
+                                <a href="#" class="view-details-btn">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Card 15 -->
+                    <div class="slider-card">
+                        <div class="slider-card-image">
+                            <img src="https://images.unsplash.com/photo-1539667547529-84b2b9d3b9e3?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="Historical Journey">
+                        </div>
+                        <div class="slider-card-content">
+                            <h3 class="slider-card-title">Historical Journey</h3>
+                            <p class="slider-card-description">Step back in time and explore ancient civilizations and landmarks.</p>
+                            <div class="slider-card-footer">
+                                <div class="slider-card-price">$1,349</div>
+                                <a href="#" class="view-details-btn">View Details</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="slider-nav" id="sliderNav">
+                <!-- Dots will be generated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="copyright">
+                &copy; 2025 Tuan Abdul Lateef Sally. All rights reserved.
+            </div>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+                <a href="#">Support</a>
+            </div>
+        </div>
+    </footer>
+  <script>
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.navigation')) {
+                navLinks.classList.remove('active');
+            }
+        });
+
+        // Sliding cards functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const track = document.getElementById('cardsTrack');
+            const cards = document.querySelectorAll('.slider-card');
+            const sliderNav = document.getElementById('sliderNav');
+            
+            const cardWidth = 300 + 25; // card width + gap
+            const cardsPerView = 5;
+            const totalCards = cards.length;
+            const totalSlides = Math.ceil(totalCards / cardsPerView);
+            let currentSlide = 0;
+            
+            // Create navigation dots
+            for (let i = 0; i < totalSlides; i++) {
+                const dot = document.createElement('div');
+                dot.classList.add('slider-dot');
+                if (i === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => {
+                    goToSlide(i);
+                });
+                sliderNav.appendChild(dot);
+            }
+            
+            function goToSlide(slideIndex) {
+                currentSlide = slideIndex;
+                const translateX = -currentSlide * cardWidth * cardsPerView;
+                track.style.transform = `translateX(${translateX}px)`;
+                
+                // Update active dot
+                document.querySelectorAll('.slider-dot').forEach((dot, index) => {
+                    dot.classList.toggle('active', index === currentSlide);
+                });
+            }
+            
+            // Auto slide functionality
+            function autoSlide() {
+                currentSlide = (currentSlide + 1) % totalSlides;
+                goToSlide(currentSlide);
+            }
+            
+            // Start auto sliding
+            let slideInterval = setInterval(autoSlide, 4000);
+            
+            // Pause auto sliding on hover
+            const sliderContainer = document.querySelector('.cards-slider-container');
+            sliderContainer.addEventListener('mouseenter', () => {
+                clearInterval(slideInterval);
+            });
+            
+            sliderContainer.addEventListener('mouseleave', () => {
+                slideInterval = setInterval(autoSlide, 4000);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1854 @@
+ 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TWV - The Wanderlust Vacation</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+           /* UPDATED: White background */
+        body {
+            background-color: #ffffff;
+            color: #333;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+        /* Header Styles */  
+        .header-container {
+            position: relative;
+            width: 100%;
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;       
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+        }  
+        .video-background {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.4);
+            z-index: 0;
+        }
+
+        .content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            letter-spacing: 1px;
+        }
+
+        .tagline {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .description {
+            font-size: 2rem;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        .navigation {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            padding: 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 2;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: opacity 0.3s;
+        }
+
+        .nav-links a:hover {
+            opacity: 0.8;
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .scroll-down {
+            position: absolute;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: white;
+            font-size: 1.5rem;
+            animation: bounce 2s infinite;
+            z-index: 2;
+            cursor: pointer;
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0) translateX(-50%);
+            }
+            40% {
+                transform: translateY(-10px) translateX(-50%);
+            }
+            60% {
+                transform: translateY(-5px) translateX(-50%);
+            }
+        }
+
+        /* Cards Section Styles */
+        .cards-section {
+            padding: 80px 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #2c3e50, #3498db);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 50px;
+        }
+
+        /* FIXED: Improved grid for proper alignment */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+            align-items: start;
+            justify-items: center;
+        }
+
+        /* All cards same size */
+        .card {
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            height: 380px;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Large card that spans 2 columns */
+        .card-large {
+            grid-column: span 2;
+            height: 380px;
+            width: 100%;
+        }
+
+        /* FIXED: Ensure border wrapper also spans 2 columns for large cards */
+        .card-border-wrapper.large-card {
+            grid-column: span 2;
+            width: 100%;
+        }
+
+        /* UPDATED: Bouncing animation */
+        .card-bounce {
+            animation: subtle-bounce 1s ease-in-out infinite;
+        }
+        @keyframes subtle-bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .card-bounce:hover {
+            animation: none;
+        }
+
+        .card-header {
+            padding: 20px 20px 12px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+            z-index: 2;
+        }
+
+        .card-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card-description {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .card-content {
+            padding: 15px 20px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            z-index: 2;
+        }
+
+        /* Video container */
+        .video-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            opacity: 0.3;
+            transition: opacity 0.5s ease;
+        }
+
+        .card:hover .video-container {
+            opacity: 0.8;
+        }
+
+        .card-video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .video-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.3));
+        }
+
+        .card-details {
+            margin-top: 10px;
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 0.85rem;
+            line-height: 1.5;
+        }
+
+        .card-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 12px;
+        }
+
+        .feature-tag {
+            background: rgba(255, 255, 255, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            border-radius: 20px;
+            padding: 4px 10px;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .card-footer {
+            padding: 15px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 2;
+        }
+
+        .explore-link {
+            color: rgba(255, 255, 255, 0.9);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: color 0.3s;
+        }
+
+        /* NEW: Updated Golden Button with Shining Animation */
+        .moving-button-container {
+            display: flex;
+            justify-content: center;
+            margin: 60px 20px 40px;
+            width: 100%;
+        }
+
+        .moving-button {
+            background: linear-gradient(90deg, #FFD700, #FFA500, #FFD700);
+            background-size: 200% 100%;
+            color: #000;
+            border: none;
+            border-radius: 50px;
+            padding: 20px 40px;
+            font-weight: 700;
+            font-size: 1.5rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(255, 215, 0, 0.3);
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            max-width: 1400px;
+            text-align: center;
+            animation: shine 3s infinite linear;
+            text-transform: uppercase;
+        }
+
+        .moving-button:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(255, 215, 0, 0.5);
+            animation: shine-fast 1.5s infinite linear;
+        }
+
+        .moving-button:active {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.4);
+        }
+
+        /* Gold gradient shine animation */
+        @keyframes shine {
+            0% {
+                background-position: -200% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        @keyframes shine-fast {
+            0% {
+                background-position: -200% 0;
+            }
+            100% {
+                background-position: 200% 0;
+            }
+        }
+
+        /* Glow effect */
+        .moving-button::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(90deg, #FFD700, #FFA500, #FFD700);
+            border-radius: 52px;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            animation: glow 2s infinite linear;
+        }
+
+        .moving-button:hover::before {
+            opacity: 0.7;
+        }
+
+        @keyframes glow {
+            0%, 100% {
+                filter: blur(5px);
+                opacity: 0.5;
+            }
+            50% {
+                filter: blur(10px);
+                opacity: 0.8;
+            }
+        }
+
+        .explore-link:hover {
+            color: white;
+        }
+
+        .explore-link i {
+            font-size: 0.8rem;
+            transition: transform 0.3s;
+        }
+
+        .explore-link:hover i {
+            transform: translateX(3px);
+        }
+
+        /* Buy Now Button */
+        .buy-now-btn {
+            display: inline-block;
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            padding: 8px 16px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .buy-now-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            background: white;
+        }
+
+        /* Card Colors - UPDATED with new colors */
+        .card-1 {
+            background: linear-gradient(145deg, #FF6B6B, #FF8E8E);
+        }
+        
+        .card-2 {
+            background: linear-gradient(145deg, #4ECDC4, #88D9D3);
+        }
+        
+        .card-3 {
+            background: linear-gradient(145deg, #45B7D1, #7BCFE8);
+        }
+        
+        .card-4 {
+            background: linear-gradient(145deg, #96CEB4, #B7E4C7);
+        }
+        
+        .card-5 {
+            background: linear-gradient(145deg, #FFD166, #FFE08A);
+        }
+        
+        /* NEW: Cultural Heritage & Scenic Railways Combined Card */
+        .card-6 {
+            background: linear-gradient(145deg, #7209B7, #9D4EDD);
+        }
+        
+        .card-7 {
+            background: linear-gradient(145deg, #118AB2, #2EC4B6);
+        }
+        
+        .card-8 {
+            background: linear-gradient(145deg, #06D6A0, #4CE5B1);
+        }
+        
+        .card-9 {
+            background: linear-gradient(145deg, #FF9E6D, #FFB896);
+        }
+        
+        .card-10 {
+            background: linear-gradient(145deg, #3A86FF, #6BA3FF);
+        }
+
+        /* Summer Package Card Colors */
+        .summer-card-1 { background: linear-gradient(145deg, #FF9A3C, #FF6A00); }
+        .summer-card-2 { background: linear-gradient(145deg, #00B4DB, #0083B0); }
+        .summer-card-3 { background: linear-gradient(145deg, #FFD700, #FFA500); }
+        .summer-card-4 { background: linear-gradient(145deg, #38EF7D, #11998E); }
+        .summer-card-5 { background: linear-gradient(145deg, #FF416C, #FF4B2B); }
+        .summer-card-6 { background: linear-gradient(145deg, #654EA3, #EAAFC8); }
+        .summer-card-7 { background: linear-gradient(145deg, #00C9FF, #92FE9D); }
+        .summer-card-8 { background: linear-gradient(145deg, #F46B45, #EEA849); }
+        .summer-card-9 { background: linear-gradient(145deg, #A770EF, #CF8BF3); }
+        .summer-card-10 { background: linear-gradient(145deg, #FF5F6D, #FFC371); }
+        .summer-card-11 { background: linear-gradient(145deg, #36D1DC, #5B86E5); }
+        .summer-card-12 { background: linear-gradient(145deg, #FFE259, #FFA751); }
+        .summer-card-13 { background: linear-gradient(145deg, #FF5F6D, #FFC371); }
+        .summer-card-14 { background: linear-gradient(145deg, #654EA3, #EAAFC8); }
+        .summer-card-15 { background: linear-gradient(145deg, #FF9A3C, #FF6A00); }
+
+        /* Winter Package Card Colors */
+        .winter-card-1 { background: linear-gradient(145deg, #00B4DB, #0083B0); }
+        .winter-card-2 { background: linear-gradient(145deg, #4A00E0, #8E2DE2); }
+        .winter-card-3 { background: linear-gradient(145deg, #36D1DC, #5B86E5); }
+        .winter-card-4 { background: linear-gradient(145deg, #0F2027, #203A43, #2C5364); }
+        .winter-card-5 { background: linear-gradient(145deg, #2193b0, #6dd5ed); }
+        .winter-card-6 { background: linear-gradient(145deg, #2980B9, #6DD5FA); }
+        .winter-card-7 { background: linear-gradient(145deg, #1D2671, #C33764); }
+        .winter-card-8 { background: linear-gradient(145deg, #3a7bd5, #00d2ff); }
+        .winter-card-9 { background: linear-gradient(145deg, #1A2980, #26D0CE); }
+        .winter-card-10 { background: linear-gradient(145deg, #1D2B64, #F8CDDA); }
+        .winter-card-11 { background: linear-gradient(145deg, #0575E6, #021B79); }
+        .winter-card-12 { background: linear-gradient(145deg, #4568DC, #B06AB3); }
+        .winter-card-13 { background: linear-gradient(145deg, #3E5151, #DECBA4); }
+        .winter-card-14 { background: linear-gradient(145deg, #2C3E50, #4CA1AF); }
+        .winter-card-15 { background: linear-gradient(145deg, #3494E6, #EC6EAD); }
+
+        /* Neon Border Animation */
+        .card-border-wrapper {
+            position: relative;
+            border-radius: 18px;
+            padding: 2px;
+            background: linear-gradient(45deg, #ff00cc, #3333ff, #00ccff, #ff00cc);
+            background-size: 400% 400%;
+            animation: neon-border-animation 3s ease infinite;
+            width: 100%;
+        }
+
+        .card-border-wrapper .card {
+            border-radius: 16px;
+            height: calc(100% - 4px);
+            width: calc(100% - 4px);
+            margin: 0 auto;
+        }
+
+        @keyframes neon-border-animation {
+            0% {
+                background-position: 0% 50%;
+            }
+            50% {
+                background-position: 100% 50%;
+            }
+            100% {
+                background-position: 0% 50%;
+            }
+        }
+
+        /* NEW: Summer Packages Slider Section */
+        .summer-section {
+            padding: 80px 20px;
+            background: linear-gradient(to bottom, #f8f9fa, #ffffff);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .summer-section .section-title {
+            background: linear-gradient(90deg, #FF6B6B, #FF8E53);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .summer-section .section-subtitle {
+            color: #666;
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin-bottom: 40px;
+        }
+
+        /* NEW: Winter Packages Slider Section */
+        .winter-section {
+            padding: 80px 20px;
+            background: linear-gradient(to bottom, #f0f8ff, #ffffff);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .winter-section .section-title {
+            background: linear-gradient(90deg, #00B4DB, #0083B0);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 3rem;
+            margin-bottom: 20px;
+        }
+
+        .winter-section .section-subtitle {
+            color: #666;
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin-bottom: 40px;
+        }
+
+        /* Slider Container */
+        .slider-container {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            padding: 20px 0;
+        }
+
+        .slider-track {
+            display: flex;
+            gap: 25px;
+            width: max-content;
+        }
+
+        /* Summer slider animation (right to left) */
+        .summer-slider {
+            animation: scroll-right-to-left 40s linear infinite;
+        }
+
+        /* Winter slider animation (left to right) */
+        .winter-slider {
+            animation: scroll-left-to-right 40s linear infinite;
+        }
+
+        .slider-track:hover {
+            animation-play-state: paused;
+        }
+
+        /* Summer Slider Card */
+        .summer-slider-card {
+            flex: 0 0 320px;
+            height: 380px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Winter Slider Card */
+        .winter-slider-card {
+            flex: 0 0 320px;
+            height: 380px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transition: all 0.3s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .summer-slider-card:hover,
+        .winter-slider-card:hover {
+            transform: translateY(-10px) scale(1.02);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.25);
+        }
+
+        .summer-slider-card .card-header,
+        .winter-slider-card .card-header {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .summer-slider-card .card-title,
+        .winter-slider-card .card-title {
+            font-size: 1.3rem;
+            color: white;
+            margin-bottom: 5px;
+        }
+
+        .summer-slider-card .card-description,
+        .winter-slider-card .card-description {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .summer-slider-card .card-content,
+        .winter-slider-card .card-content {
+            padding: 15px 20px;
+            flex-grow: 1;
+        }
+
+        .summer-slider-card .card-details,
+        .winter-slider-card .card-details {
+            font-size: 0.8rem;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .summer-slider-card .card-features,
+        .winter-slider-card .card-features {
+            margin-top: 10px;
+        }
+
+        .summer-slider-card .feature-tag,
+        .winter-slider-card .feature-tag {
+            background: rgba(255, 255, 255, 0.25);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            font-size: 0.7rem;
+            padding: 3px 8px;
+        }
+
+        .summer-slider-card .card-footer,
+        .winter-slider-card .card-footer {
+            padding: 15px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .price-tag {
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Animation for continuous scrolling - Right to Left (Summer) */
+        @keyframes scroll-right-to-left {
+            0% {
+                transform: translateX(0);
+            }
+            100% {
+                transform: translateX(calc(-340px * 7.5));
+            }
+        }
+
+        /* Animation for continuous scrolling - Left to Right (Winter) */
+        @keyframes scroll-left-to-right {
+            0% {
+                transform: translateX(calc(-340px * 7.5));
+            }
+            100% {
+                transform: translateX(0);
+            }
+        }
+
+        /* Slider controls */
+        .slider-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .slider-btn {
+            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+            color: white;
+            border: none;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .winter-section .slider-btn {
+            background: linear-gradient(135deg, #00B4DB, #0083B0);
+            box-shadow: 0 5px 15px rgba(0, 180, 219, 0.3);
+        }
+
+        .slider-btn:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
+        }
+
+        .winter-section .slider-btn:hover {
+            box-shadow: 0 8px 20px rgba(0, 180, 219, 0.4);
+        }
+
+        /* Footer Styles */
+        footer {
+            background: #2c3e50;
+            padding: 40px 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-content { 
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+        .footer-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .footer-links a {
+            color: #b0b0c0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .copyright {
+            color: #b0b0c0;
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .cards-grid {
+                grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            }
+            
+            .card-large {
+                grid-column: span 2;
+            }
+            
+            .card-border-wrapper.large-card {
+                grid-column: span 2;
+            }
+
+            .summer-slider-card,
+            .winter-slider-card {
+                flex: 0 0 300px;
+                height: 360px;
+            }
+
+            @keyframes scroll-right-to-left {
+                100% {
+                    transform: translateX(calc(-325px * 7.5));
+                }
+            }
+
+            @keyframes scroll-left-to-right {
+                0% {
+                    transform: translateX(calc(-325px * 7.5));
+                }
+            }
+        }
+
+        @media (max-width: 992px) {
+            .cards-grid {
+                grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            }
+            
+            .card-large {
+                grid-column: span 2;
+            }
+            
+            .card-border-wrapper.large-card {
+                grid-column: span 2;
+            }
+
+            .summer-section .section-title,
+            .winter-section .section-title {
+                font-size: 2.5rem;
+            }
+
+            .summer-slider-card,
+            .winter-slider-card {
+                flex: 0 0 280px;  
+                height: 350px;
+            }
+
+            @keyframes scroll-right-to-left {
+                100% {
+                    transform: translateX(calc(-305px * 7.5));
+                }
+            }
+ 
+            @keyframes scroll-left-to-right {
+                0% {
+                    transform: translateX(calc(-305px * 7.5));
+                }
+            }
+        }
+
+        @media (max-width: 768px) {
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .card-large {
+                grid-column: 1;
+            }
+            
+            .card-border-wrapper.large-card {
+                grid-column: 1;
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+            
+            .section-subtitle {
+                font-size: 1rem;
+                padding: 0 15px;
+            }
+
+            .summer-section .section-title,
+            .winter-section .section-title {
+                font-size: 2rem;
+            }
+
+            .summer-section .section-subtitle,
+            .winter-section .section-subtitle {
+                font-size: 1rem;
+            }
+
+            .summer-slider-card,
+            .winter-slider-card {
+                flex: 0 0 280px;
+                height: 340px;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                right: 20px;
+                background: rgba(0, 0, 0, 0.8);
+                padding: 15px;
+                border-radius: 10px;
+                width: 200px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .logo {
+                font-size: 2rem;
+            }
+
+            .tagline {
+                font-size: 1.2rem;
+            }
+
+            .description {
+                font-size: 1rem;
+            }
+
+            .moving-button {
+                font-size: 1.2rem;
+                padding: 18px 30px;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            @keyframes scroll-right-to-left {
+                100% {
+                    transform: translateX(calc(-305px * 7.5));
+                }
+            }
+
+            @keyframes scroll-left-to-right {
+                0% {
+                    transform: translateX(calc(-305px * 7.5));
+                }
+            }
+        }
+
+        @media (max-width: 480px) {
+            .card {
+                border-radius: 12px;
+                height: 360px;
+            }
+            
+            .card-large {
+                height: 360px;
+            }
+            
+            .card-header, .card-content, .card-footer {
+                padding: 15px;
+            } 
+            
+            .card-title {
+                font-size: 1.2rem;
+            }
+            
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .summer-section .section-title,
+            .winter-section .section-title {
+                font-size: 1.8rem;
+            }
+
+            .summer-slider-card,
+            .winter-slider-card {
+                flex: 0 0 260px;
+                height: 320px;
+            }
+
+            .logo {
+                font-size: 1.8rem;
+            }
+
+            .moving-button {
+                font-size: 1rem;
+                padding: 16px 25px;
+            }
+
+            @keyframes scroll-right-to-left {
+                100% {
+                    transform: translateX(calc(-285px * 7.5));
+                }
+            }
+
+            @keyframes scroll-left-to-right {
+                0% {
+                    transform: translateX(calc(-285px * 7.5));
+                }
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Section with Video Background -->
+    <header class="header-container">
+        <video class="video-background" autoplay muted loop>
+            <source src="2.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="overlay"></div>
+        <nav class="navigation">
+            <div class="logo">TWV</div>
+            <div class="nav-links">
+                <a href="#">Home</a>
+                <a href="#cards">Packages</a>
+                <a href="#summer">Summer Packages</a>
+                <a href="#winter">Winter Packages</a>
+                <a href="#about">About Us</a>
+                <a href="#">Reviews</a>
+                <a href="#">Contact</a>
+            </div>
+            <button class="mobile-menu-btn">☰</button>
+        </nav> 
+        <div class="content">
+            <h1 class="tagline">Travel with the best TWV and have unforgettable memories</h1>
+            <p class="description">Enjoy more and all day long with professionals helping your day to be more awesome than you expect</p>
+            <a href="#" class="cta-button">View Packages</a>
+        </div>
+        <div class="scroll-down" onclick="scrollToCards()">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </header>
+
+    <!-- Cards Section --> 
+    <section class="cards-section" id="cards">
+        <div class="container">
+            <h1 class="section-title">fix depaeters</h1>
+            <p class="section-subtitle">We have organized the best for you</p> 
+            <div class="cards-grid">
+                <!-- First Large Red Card -->
+                <div class="card-border-wrapper large-card">
+                    <div class="card card-1 card-bounce card-large">
+                        <div class="video-container">
+                            <video class="card-video" muted loop preload="metadata">
+                                <source src="1.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay"></div>
+                        </div>
+                        <div class="card-header">
+                            <h2 class="card-title">Night Life Experience</h2>
+                            <p class="card-description">Explore the vibrant nightlife with games, music, and unforgettable rides</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-details">
+                                <p>Experience the most electrifying nightlife across multiple destinations. From Sri Lanka's beach parties to Dubai's luxury clubs and Thailand's famous full moon parties.</p>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a href="#" class="explore-link">Explore Night Life <i class="fas fa-arrow-right"></i></a>
+                            <a href="indefx.html" class="buy-now-btn">Buy Now</a>
+                        </div>
+                    </div>       
+                </div>
+
+                <!-- Beach Paradise -->
+                <div class="card-border-wrapper">
+                    <div class="card card-2 card-bounce">
+                        <div class="video-container">
+                            <video class="card-video" muted loop preload="metadata">
+                                <source src="3.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay"></div>
+                        </div>
+                        <div class="card-header">
+                            <h2 class="card-title">Beach Paradise</h2>  
+                            <p class="card-description">Relax on pristine beaches with crystal clear waters</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-details">
+                                <p>Discover the world's most stunning coastlines with our beach paradise packages. Experience the turquoise waters of the Maldives and the golden shores of Sri Lanka.</p>
+                            </div>
+                        </div>    
+                        <div class="card-footer">
+                            <a href="#" class="explore-link">Explore Beaches <i class="fas fa-arrow-right"></i></a>
+                            <a href="#" class="buy-now-btn">Buy Now</a>
+                        </div>
+                    </div>
+                </div>
+ 
+                <!-- Mountain Trek -->
+                <div class="card-border-wrapper">
+                    <div class="card card-3 card-bounce">
+                        <div class="video-container">
+                            <video class="card-video" muted loop preload="metadata">
+                                <source src="4.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay"></div>
+                        </div>
+                        <div class="card-header">
+                            <h2 class="card-title">Mountain Trek</h2>
+                            <p class="card-description">Hike through breathtaking mountain trails</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-details">
+                                <p>Challenge yourself with our mountain trekking adventures through the Himalayas and other majestic ranges. Experience stunning vistas and diverse ecosystems.</p>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a href="#" class="explore-link">Explore Mountains <i class="fas fa-arrow-right"></i></a>
+                            <a href="#" class="buy-now-btn">Buy Now</a>
+                        </div>
+                    </div>
+                </div>
+
+               
+
+                <!-- Wellness Retreat -->
+                <div class="card-border-wrapper">
+                    <div class="card card-5 card-bounce">
+                        <div class="video-container">
+                            <video class="card-video" muted loop preload="metadata">
+                                <source src="7.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay"></div>
+                        </div>
+                        <div class="card-header">
+                            <h2 class="card-title">Wellness Retreat</h2>
+                            <p class="card-description">Rejuvenate your mind and body</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-details">
+                                <p>Our wellness retreats offer a holistic approach to health and relaxation across Asia's most serene locations. Experience traditional Ayurvedic treatments, yoga, meditation, and spa therapies in peaceful natural settings.</p>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a href="#" class="explore-link">Explore Wellness <i class="fas fa-arrow-right"></i></a>
+                            <a href="#" class="buy-now-btn">Buy Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                  <!-- Cultural Heritage & Scenic Railways COMBINED CARD (Large like red card) -->
+                <div class="card-border-wrapper large-card">
+                    <div class="card card-6 card-bounce card-large">
+                        <div class="video-container">
+                            <video class="card-video" muted loop preload="metadata">
+                                <source src="7.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay"></div>
+                        </div>
+                        <div class="card-header">
+                            <h2 class="card-title">Scenic Railways</h2>
+                            <p class="card-description">Discover ancient wonders and journey through picturesque landscapes</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-details">
+                                <p>  hill country railways to Switzerland's alpine routes and Japan's scenic bullet trains.</p>
+                            </div>
+                            <div class="card-features">
+                                <span class="feature-tag">Ancient Temples</span>
+                                <span class="feature-tag">UNESCO Sites</span>
+                                <span class="feature-tag">Historic Landmarks</span>
+                                
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a href="#" class="explore-link">Explore Heritage & Railways <i class="fas fa-arrow-right"></i></a>
+                            <a href="#" class="buy-now-btn">Buy Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Water Sports -->
+                <div class="card-border-wrapper">
+                    <div class="card card-7 card-bounce">
+                        <div class="video-container">
+                            <video class="card-video" muted loop preload="metadata">
+                                <source src="8.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay"></div>
+                        </div>
+                        <div class="card-header">
+                            <h2 class="card-title">Water Sports</h2>
+                            <p class="card-description">Exciting water adventures and activities</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-details">
+                                <p>Experience thrilling water adventures across Asia's beautiful coastlines. From surfing in Sri Lanka to snorkeling in the Maldives, jet skiing in Dubai, and </p>
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a href="#" class="explore-link">Explore Water Sports <i class="fas fa-arrow-right"></i></a>
+                            <a href="#" class="buy-now-btn">Buy Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                 <!-- Beach Paradise -->
+                <div class="card-border-wrapper">
+                    <div class="card card-2 card-bounce">
+                        <div class="video-container">
+                            <video class="card-video" muted loop preload="metadata">
+                                <source src="3.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay"></div>
+                        </div>
+                        <div class="card-header">
+                            <h2 class="card-title">Beach Paradise</h2>  
+                            <p class="card-description">Relax on pristine beaches with crystal clear waters</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-details">
+                                <p>Discover the world's most stunning coastlines with our beach paradise packages. Experience the turquoise waters of the Maldives and the golden shores of Sri Lanka.</p>
+                            </div>
+                        </div>    
+                        <div class="card-footer">
+                            <a href="#" class="explore-link">Explore Beaches <i class="fas fa-arrow-right"></i></a>
+                            <a href="#" class="buy-now-btn">Buy Now</a>
+                        </div>
+                    </div>
+                </div>
+
+                 <!-- Beach Paradise -->
+                <div class="card-border-wrapper">
+                    <div class="card card-2 card-bounce">
+                        <div class="video-container">
+                            <video class="card-video" muted loop preload="metadata">
+                                <source src="3.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay"></div>
+                        </div>
+                        <div class="card-header">
+                            <h2 class="card-title">Beach Paradise</h2>  
+                            <p class="card-description">Relax on pristine beaches with crystal clear waters</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-details">
+                                <p>Discover the world's most stunning coastlines with our beach paradise packages. Experience the turquoise waters of the Maldives and the golden shores of Sri Lanka.</p>
+                            </div>
+                        </div>    
+                        <div class="card-footer">
+                            <a href="#" class="explore-link">Explore Beaches <i class="fas fa-arrow-right"></i></a>
+                            <a href="#" class="buy-now-btn">Buy Now</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Cultural Heritage & Scenic Railways COMBINED CARD (Large like red card) -->
+                <div class="card-border-wrapper large-card">
+                    <div class="card card-6 card-bounce card-large">
+                        <div class="video-container">
+                            <video class="card-video" muted loop preload="metadata">
+                                <source src="7.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay"></div>
+                        </div>  
+                        
+                        <div class="card-header">
+                            <h2 class="card-title">Scenic Railways</h2>
+                            <p class="card-description">Discover ancient wonders and journey through picturesque landscapes</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-details">
+                                <p>  hill country railways to Switzerland's alpine routes and Japan's scenic bullet trains.</p>
+                            </div>
+                            <div class="card-features">
+                                <span class="feature-tag">Ancient Temples</span>
+                                <span class="feature-tag">UNESCO Sites</span>
+                                <span class="feature-tag">Historic Landmarks</span>
+                                
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a href="#" class="explore-link">Explore Heritage & Railways <i class="fas fa-arrow-right"></i></a>
+                            <a href="#" class="buy-now-btn">Buy Now</a>
+                        </div> 
+                    </div>
+                </div>   
+                <!-- Cultural Heritage & Scenic Railways COMBINED CARD (Large like red card) --> 
+             
+                <div class="card-border-wrapper large-card">
+                    <div class="card card-6 card-bounce card-large">
+                        <div class="video-container">   
+                            <video class="card-video" muted loop preload="metadata">
+                                <source src="7.mp4" type="video/mp4">   55ityjh
+                            </video>
+                            <div class="video-overlay"></div>
+                        </div>
+                        <div class="card-header"> 
+                            <h2 class="card-title">Scenic Railways</h2>
+                            <p class="card-description">Discover ancient wonders and journey through picturesque landscapes</p>
+                        </div>
+                        <div class="card-content">   
+                            <div class="card-details">
+                                <p>  hill country railways to Switzerland's alpine routes and Japan's scenic bullet trains.</p>
+                            </div>
+                            <div class="card-features">
+                                <span class="feature-tag">Ancient Temples</span>
+                                <span class="feature-tag">UNESCO Sites</span>
+                                <span class="function-type value"></span>
+                                <span class="feature-tag">Historic Landmarks</span>
+                          
+                            </div> 
+                        </div> 
+                        <div class="card-footer">
+                            <a href="#" class="explore-link">Explore Heritage & Railways <i class="fas fa-arrow-right"></i></a>
+                            <a href="#" class="buy-now-btn">Buy Now</a>
+                        </div>
+                    </div>
+                </div>
+            <!-- Cultural Heritage & Scenic Railways COMBINED CARD (Large like red card) -->
+                <div class="card-border-wrapper large-card">
+                    <div class="card card-6 card-bounce card-large">
+                        <div class="video-container">
+                            <video class="card-video" muted loop preload="metadata">
+                                <source src="7.mp4" type="video/mp4">
+                            </video>
+                            <div class="video-overlay"></div>
+                        </div>
+                        <div class="card-header">
+                            <h2 class="card-title">Ella train ways </h2>
+                            <p class="card-description">Discover ancient wonders and journey through picturesque landscapes</p>
+                        </div>
+                        <div class="card-content">
+                            <div class="card-details">
+                                <p>Experience the best of both worlds! Immerse yourself in Asitrain routes, from Sri Lanka</p>
+                            </div>
+                            <div class="card-features">
+                                <span class="feature-tag">Ancient Temples</span>
+                                <span class="feature-tag">UNESCO Sites</span>
+                         
+                            </div>
+                        </div>
+                        <div class="card-footer">
+                            <a href="#" class="explore-link">Explore Heritage & Railways <i class="fas fa-arrow-right"></i></a>
+                            <a href="#" class="buy-now-btn">Buy Now</a>
+                        </div>
+                    </div>
+                </div>  
+            </div>
+        </div>
+    </section> 
+    <!-- NEW: Golden Button Container -->
+    <div class="moving-button-container">
+        <a href="fixeddepathers.html" class="moving-button">Don't Miss Your Chance - view more</a>
+    </div>
+      <!-- NEW: Summer Packages Slider Section -->
+    <section class="summer-section" id="summer">
+        <div class="container">
+            <h1 class="section-title">Summer Packages</h1>
+            <p class="section-subtitle">Beat the heat with our exclusive summer vacation deals! From tropical beaches to mountain escapes, we have the perfect summer getaway for you.</p>
+            
+            <div class="slider-container">
+                <div class="slider-track summer-slider" id="summerSliderTrack">
+                    <!-- 15 Summer Package Cards will be inserted here by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW: Winter Packages Slider Section -->
+    <section class="winter-section" id="winter">
+        <div class="container">
+            <h1 class="section-title">Winter Packages</h1>
+            <p class="section-subtitle">Embrace the cold with our amazing winter vacation packages! From ski resorts to cozy cabin getaways, we have the perfect winter escape for you.</p>
+            
+            <div class="slider-container">
+                <div class="slider-track winter-slider" id="winterSliderTrack">
+                    <!-- 15 Winter Package Cards will be inserted here by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="copyright">
+                &copy; 2025 Tuan Abdul Lateef Sally. All rights reserved.
+            </div>
+            <div class="footer-links">
+                <a href="#">Privacy Policy</a>rtghjudtguyhtggtjusting function jus
+                <a href="#">Terms of Service</a>
+                <a href="#">Support</a>functioon type  function 
+            </div>
+        </div>rgtub  g  justinh functionality
+    </footer>
+    <script>
+
+
+        // Mobile menu toggle
+        const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+        const navLinks = document.querySelector('.nav-links');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+AudioBufferSourceNode
+        // Close mobile menu when clicking outside
+        document.addEventListener('click', (e) => {
+            if (!e.target.closest('.navigation')) {
+                navLinks.classList.remove('active');
+            }
+        });
+
+        // Scroll to cards section
+        function scrollToCards() {
+            document.getElementById('cards').scrollIntoView({ 
+                behavior: 'smooth' 
+            });
+        }
+
+        // Video hover functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.card');
+            const videos = document.querySelectorAll('.card-video');
+            
+            // Initialize videos as paused
+            videos.forEach(video => {
+                video.pause();
+                video.currentTime = 0;
+            });
+             
+            // Add hover effects for cards
+            cards.forEach((card, index) => {  
+                const video = card.querySelector('.card-video');            
+                  
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-8px)';
+                    if (video) {
+                        video.play().catch(e => console.log("Video autoplay prevented:", e));
+                    }
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                    if (video) {
+                        video.pause();
+                        video.currentTime = 0;
+                    }
+                });
+            });
+
+            // Golden button click effect
+            const goldenButton = document.querySelector('.moving-button');
+            if (goldenButton) {
+                goldenButton.addEventListener('click', function() {
+                    // Add a pulse effect on click
+                    this.style.transform = 'scale(0.98)';
+                    setTimeout(() => {
+                        this.style.transform = '';
+                    }, 200);
+                    
+                    // Scroll to summer packages
+                    document.getElementById('summer').scrollIntoView({ 
+                        behavior: 'smooth' 
+                    });
+                });
+            }
+
+            // NEW: Summer Packages Slider Functionality
+            const summerPackages = [
+                {
+                    title: "Tropical Maldives Escape",
+                    description: "7 days in luxury water villas",
+                    details: "Experience paradise with private pool villas, gourmet dining, and unlimited water sports. Perfect for honeymooners and couples.",
+                    price: "$2,499",
+                    features: ["All Inclusive", "Private Villa", "Spa Access", "Snorkeling"],
+                    class: "summer-card-1"
+                },
+                {
+                    title: "Bali Summer Adventure",
+                    description: "Cultural immersion & beach relaxation",
+                    details: "Explore Bali's temples, rice terraces, and pristine beaches. Includes guided tours and traditional cooking classes.",
+                    price: "$1,899",
+                    features: ["Cultural Tours", "Beachfront Hotel", "Yoga Classes", "Local Cuisine"],
+                    class: "summer-card-2"
+                },
+                {
+                    title: "Greek Island Hopping",
+                    description: "Santorini, Mykonos & Crete",
+                    details: "Discover the stunning Greek islands with ferry transfers, luxury accommodations, and guided historical tours.",
+                    price: "$3,299",
+                    features: ["Island Hopping", "Luxury Hotels", "Wine Tasting", "Sunset Cruises"],
+                    class: "summer-card-3"
+                },
+                {
+                    title: "Caribbean Cruise",
+                    description: "7-night all-inclusive cruise",
+                    details: "Sail through turquoise waters visiting multiple Caribbean islands with unlimited dining and entertainment onboard.",
+                    price: "$2,799",
+                    features: ["All Inclusive", "Multiple Ports", "Entertainment", "Gourmet Dining"],
+                    class: "summer-card-4"
+                },
+                {
+                    title: "Italian Summer Romance",
+                    description: "Rome, Florence & Amalfi Coast",
+                    details: "Experience Italy's finest with guided tours of historical sites, wine tasting, and coastal relaxation.",
+                    price: "$3,599",
+                    features: ["Guided Tours", "Wine Tasting", "Coastal Drive", "Gourmet Food"],
+                    class: "summer-card-5"
+                },
+                {
+                    title: "Thai Island Paradise",
+                    description: "Phuket & Phi Phi Islands",
+                    details: "Enjoy Thailand's famous islands with beach parties, island tours, and traditional Thai massages.",
+                    price: "$1,699",
+                    features: ["Island Tours", "Beach Parties", "Thai Spa", "Local Markets"],
+                    class: "summer-card-6"
+                },
+                {
+                    title: "Swiss Alpine Summer",
+                    description: "Mountain resorts & scenic trains",
+                    details: "Escape to the cool Swiss Alps with mountain hiking, scenic train rides, and charming village stays.",
+                    price: "$3,199",
+                    features: ["Mountain Hiking", "Scenic Trains", "Luxury Resort", "Swiss Chocolate"],
+                    class: "summer-card-7"
+                },
+                {
+                    title: "Dubai Summer Luxury",
+                    description: "Desert safari & city exploration",
+                    details: "Experience Dubai's luxury with desert adventures, shopping extravaganzas, and iconic landmark visits.",
+                    price: "$2,899",
+                    features: ["Desert Safari", "Shopping", "Burj Khalifa", "Luxury Hotel"],
+                    class: "summer-card-8"
+                },
+                {
+                    title: "Japanese Summer Festival",
+                    description: "Tokyo, Kyoto & Mount Fuji",
+                    details: "Experience Japanese culture with summer festivals, traditional stays, and breathtaking natural sights.",
+                    price: "$4,199",
+                    features: ["Cultural Festivals", "Traditional Ryokan", "Mount Fuji", "Bullet Train"],
+                    class: "summer-card-9"
+                },
+                {
+                    title: "Spanish Coastal Escape",
+                    description: "Barcelona & Costa Brava",
+                    details: "Enjoy Spain's vibrant culture, beautiful coastlines, and delicious cuisine in this summer package.",
+                    price: "$2,399",
+                    features: ["Beach Access", "Tapas Tours", "Gaudi Architecture", "Flamenco Show"],
+                    class: "summer-card-10"
+                },
+                {
+                    title: "Canadian Rockies",
+                    description: "Banff & Lake Louise adventure",
+                    details: "Explore Canada's stunning natural beauty with hiking, wildlife viewing, and mountain resort stays.",
+                    price: "$3,499",
+                    features: ["National Parks", "Wildlife Viewing", "Mountain Resort", "Lake Activities"],
+                    class: "summer-card-11"
+                },
+                {
+                    title: "Australian Gold Coast",
+                    description: "Surf, sun & theme parks",
+                    details: "Perfect for families with theme park access, surfing lessons, and beautiful beachfront accommodations.",
+                    price: "$2,999",
+                    features: ["Theme Parks", "Surf Lessons", "Beachfront", "Wildlife Parks"],
+                    class: "summer-card-12"
+                },
+                {
+                    title: "Portuguese Summer",
+                    description: "Lisbon & Algarve coast",
+                    details: "Discover Portugal's charming cities and stunning beaches with wine tasting and historical tours.",
+                    price: "$2,199",
+                    features: ["City Tours", "Wine Tasting", "Beach Resorts", "Historical Sites"],
+                    class: "summer-card-13"
+                },
+                {
+                    title: "Hawaiian Paradise",
+                    description: "Multiple island experience",
+                    details: "Experience Hawaii's aloha spirit with volcano tours, luau dinners, and world-class beaches.",
+                    price: "$3,899",
+                    features: ["Island Hopping", "Luau Dinner", "Volcano Tour", "Surf Lessons"],
+                    class: "summer-card-14"
+                },
+                {   
+                    title: "French Riviera Luxury",
+                    description: "Nice, Cannes & Monaco",
+                    details: "Indulge in luxury on the French Riviera with yacht tours, gourmet dining, and celebrity spotting.",
+                    price: "$4,499",
+                    features: ["Yacht Tour", "Gourmet Dining", "Luxury Shopping", "Casino Visit"],
+                    class: "summer-card-15"
+                }
+            ];
+            // NEW: Winter Packages Data
+            const winterPackages = [
+                {
+                    title: "Swiss Alps Ski Adventure",
+                    description: "7 days in luxury ski resorts",
+                    details: "Experience world-class skiing in the Swiss Alps with professional instructors, luxury chalets, and après-ski entertainment.",
+                    price: "$3,299",
+                    features: ["Ski Pass", "Luxury Chalet", "Spa Access", "Ski Lessons"],
+                    class: "winter-card-1"
+                },
+                {
+                    title: "Northern Lights in Norway",
+                    description: "Aurora Borealis viewing experience",
+                    details: "Chase the Northern Lights in Norway with guided tours, cozy cabins, and Arctic adventures in Tromsø and Lofoten.",
+                    price: "$2,899",
+                    features: ["Northern Lights", "Arctic Hotel", "Dog Sledding", "Snowmobile"],
+                    class: "winter-card-2"
+                },
+                {
+                    title: "Canadian Rockies Winter",
+                    description: "Banff & Jasper National Parks",
+                    details: "Explore the stunning winter wonderland of the Canadian Rockies with ice skating, snowshoeing, and hot springs.",
+                    price: "$3,199",
+                    features: ["Ice Skating", "Hot Springs", "Snowshoeing", "Wildlife Viewing"],
+                    class: "winter-card-3"
+                },
+                {
+                    title: "Japanese Winter Magic",
+                    description: "Sapporo Snow Festival & Skiing",
+                    details: "Experience Japan's famous snow festivals, hot springs (onsen), and world-class skiing in Hokkaido.",
+                    price: "$4,299",
+                    features: ["Snow Festival", "Hot Springs", "Ski Resorts", "Japanese Cuisine"],
+                    class: "winter-card-4"
+                },
+                {
+                    title: "Iceland Winter Expedition",
+                    description: "Ice caves & glacier adventures",
+                    details: "Explore Iceland's winter wonders including ice caves, glacier hiking, and the magical Blue Lagoon.",
+                    price: "$3,599",
+                    features: ["Ice Caves", "Glacier Hike", "Blue Lagoon", "Golden Circle"],
+                    class: "winter-card-5"
+                },
+                {
+                    title: "Austrian Christmas Markets",
+                    description: "Vienna & Salzburg holiday experience",
+                    details: "Immerse yourself in the magic of Austrian Christmas markets with traditional food, music, and festive shopping.",
+                    price: "$2,499",
+                    features: ["Christmas Markets", "Classical Music", "Imperial Palaces", "Traditional Food"],
+                    class: "winter-card-6"
+                },
+                {
+                    title: "Colorado Ski Retreat",
+                    description: "Aspen & Vail luxury skiing",
+                    details: "Experience premier skiing in Colorado's famous resorts with luxury accommodations and fine dining.",
+                    price: "$3,899",
+                    features: ["Ski-in/Ski-out", "Luxury Resort", "Fine Dining", "Spa Treatments"],
+                    class: "winter-card-7"
+                },
+                {
+                    title: "Finnish Lapland Santa",
+                    description: "Rovaniemi Arctic experience",
+                    details: "Visit Santa's official hometown in Finnish Lapland with reindeer safaris and glass igloo stays.",
+                    price: "$3,299",
+                    features: ["Santa Village", "Glass Igloo", "Reindeer Safari", "Arctic Circle"],
+                    class: "winter-card-8"
+                },
+                {
+                    title: "New Zealand Southern Alps",
+                    description: "Queenstown winter adventure",
+                    details: "Experience winter in the Southern Hemisphere with skiing, bungee jumping, and stunning mountain scenery.",
+                    price: "$3,799",
+                    features: ["Ski Fields", "Adventure Sports", "Scenic Flights", "Wine Tasting"],
+                    class: "winter-card-9"
+                },
+                {
+                    title: "Scottish Highlands Winter",
+                    description: "Castle stays & whiskey tours",
+                    details: "Explore the mystical Scottish Highlands with castle accommodations, whiskey distillery tours, and winter hiking.",
+                    price: "$2,699",
+                    features: ["Castle Stay", "Whiskey Tours", "Winter Hiking", "Historic Sites"],
+                    class: "winter-card-10"
+                },
+                {
+                    title: "French Alps Ski Package",
+                    description: "Chamonix & Courchevel luxury",
+                    details: "Ski in the French Alps with access to some of the world's best ski resorts and gourmet French cuisine.",
+                    price: "$3,499",
+                    features: ["Ski Resorts", "French Cuisine", "Luxury Chalets", "Mountain Views"],
+                    class: "winter-card-11"
+                },
+                {
+                    title: "Alaskan Winter Cruise",
+                    description: "Glacier viewing & wildlife",
+                    details: "Cruise through Alaska's Inside Passage with glacier viewing, whale watching, and Northern Lights potential.",
+                    price: "$4,199",
+                    features: ["Glacier Viewing", "Whale Watching", "Northern Lights", "Wildlife"],
+                    class: "winter-card-12"
+                },
+                {
+                    title: "Russian Winter Experience",
+                    description: "Moscow & St. Petersburg",
+                    details: "Experience Russian winter with visits to the Kremlin, Hermitage Museum, and traditional Russian baths (banya).",
+                    price: "$2,999",
+                    features: ["Kremlin Tour", "Hermitage", "Russian Banya", "Ballet Show"],
+                    class: "winter-card-13"
+                },
+                {
+                    title: "Swedish Arctic Adventure",
+                    description: "Ice hotel & snow activities",
+                    details: "Stay in Sweden's famous Ice Hotel and enjoy snowmobiling, ice fishing, and Sami culture experiences.",
+                    price: "$3,399",
+                    features: ["Ice Hotel", "Snowmobiling", "Ice Fishing", "Sami Culture"],
+                    class: "winter-card-14"
+                },
+                {
+                    title: "Patagonia Winter Trek",
+                    description: "Torres del Paine National Park",
+                    details: "Hike through Patagonia's stunning winter landscapes with guided treks and luxury eco-lodges.",
+                    price: "$3,899",
+                    features: ["Guided Treks", "Eco-Lodges", "Glacier Views", "Wildlife"],
+                    class: "winter-card-15"
+                }
+            ];
+
+            const summerSliderTrack = document.getElementById('summerSliderTrack');
+            const winterSliderTrack = document.getElementById('winterSliderTrack');
+            
+            // Create 15 summer package cards (duplicate to create seamless loop)
+            function createSummerCards() {
+                // Create two sets of cards for seamless scrolling
+                for (let i = 0; i < 2; i++) {
+                    summerPackages.forEach((pkg, index) => {
+                        const card = document.createElement('div');
+                        card.className = `summer-slider-card ${pkg.class}`;
+                        card.innerHTML = `
+                            <div class="card-header">
+                                <h2 class="card-title">${pkg.title}</h2>
+                                <p class="card-description">${pkg.description}</p>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-details">${pkg.details}</div>
+                                <div class="card-features">
+                                    ${pkg.features.map(feature => `<span class="feature-tag">${feature}</span>`).join('')}
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <span class="price-tag">${pkg.price}</span>
+                                <a href="#" class="buy-now-btn">Book Now</a>
+                            </div>
+                        `;
+                        summerSliderTrack.appendChild(card);
+                    });
+                }
+            }
+            
+            // Create 15 winter package cards (duplicate to create seamless loop)
+            function createWinterCards() {
+                // Create two sets of cards for seamless scrolling
+                for (let i = 0; i < 2; i++) {
+                    winterPackages.forEach((pkg, index) => {
+                        const card = document.createElement('div');
+                        card.className = `winter-slider-card ${pkg.class}`;
+                        card.innerHTML = `
+                            <div class="card-header">
+                                <h2 class="card-title">${pkg.title}</h2>
+                                <p class="card-description">${pkg.description}</p>
+                            </div>
+                            <div class="card-content">
+                                <div class="card-details">${pkg.details}</div>
+                                <div class="card-features">
+                                    ${pkg.features.map(feature => `<span class="feature-tag">${feature}</span>`).join('')}
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <span class="price-tag">${pkg.price}</span>
+                                <a href="#" class="buy-now-btn">Book Now</a>
+                            </div>
+                        `;
+                        winterSliderTrack.appendChild(card);
+                    });
+                }
+            }
+            createSummerCards();
+            createWinterCards();
+            // Pause on hover functionality for both sliders
+            const summerSlider = document.querySelector('.summer-slider');
+            const winterSlider = document.querySelector('.winter-slider');
+            
+            if (summerSlider) {
+                summerSlider.addEventListener('mouseenter', () => {
+                    summerSlider.style.animationPlayState = 'paused';
+                });
+                
+                summerSlider.addEventListener('mouseleave', () => {
+                    summerSlider.style.animationPlayState = 'running';
+                });
+            }
+  
+            if (winterSlider) {
+                winterSlider.addEventListener('mouseenter', () => {
+                    winterSlider.style.animationPlayState = 'paused';
+                });
+                
+                winterSlider.addEventListener('mouseleave', () => {
+                    winterSlider.style.animationPlayState = 'running';
+                });
+            }
+        });
+    </script>
+</body>
+</html>

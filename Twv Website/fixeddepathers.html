@@ -1,0 +1,840 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TWV - Tour Packages</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .main-navigation {
+            background: linear-gradient(135deg, #8319b4, #570a4b);
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .logo {
+            font-size: 2rem;
+            font-weight: 700;
+            color: white;
+            text-decoration: none;
+            letter-spacing: 1px;
+        }
+
+        .logo span {
+            color: #FFD700;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            padding: 8px 16px;
+            border-radius: 20px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .home-btn {
+            background: #FFD700;
+            color: #000 !important;
+            padding: 10px 24px !important;
+            font-weight: 600;
+        }
+
+        .home-btn:hover {
+            background: #FFC107 !important;
+            box-shadow: 0 4px 15px rgba(255, 193, 7, 0.3);
+        }
+
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(rgba(26, 35, 126, 0.9), rgba(40, 53, 147, 0.9)), url('https://images.unsplash.com/photo-1488646953014-85cb44e25828?ixlib=rb-1.2.1&auto=format&fit=crop&w=1920&q=80');
+            background-size: cover;
+            background-position: center;
+            padding: 100px 20px;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 40px;
+            opacity: 0.9;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            background: white;
+            padding: 40px 20px;
+            margin: 40px auto;
+            max-width: 1200px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .filter-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .filter-btn {
+            padding: 12px 28px;
+            background: white;
+            border: 2px solid #e0e0e0;
+            border-radius: 30px;
+            font-weight: 600;
+            color: #555;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .filter-btn:hover {
+            border-color: #4ECDC4;
+            color: #4ECDC4;
+            transform: translateY(-2px);
+        }
+
+        .filter-btn.active {
+            background: #4ECDC4;
+            border-color: #4ECDC4;
+            color: white;
+            box-shadow: 0 4px 15px rgba(78, 205, 196, 0.3);
+        }
+
+        /* Tour Packages Section */
+        .tour-packages-section {
+            padding: 60px 20px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            background: linear-gradient(90deg, #2c3e50, #3498db);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto 60px;
+        }
+
+        /* Cards Grid - ALL CARDS SAME SIZE */
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            align-items: start;
+            justify-items: center;
+        }
+
+        /* All cards are the same size */
+        .tour-card {
+            width: 100%;
+            height: 500px;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            transition: all 0.4s ease;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* BOUNCE ANIMATION */
+        .card-bounce {
+            animation: subtle-bounce 2s ease-in-out infinite;
+        }
+
+        @keyframes subtle-bounce {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-10px);
+            }
+        }
+
+        .tour-card:hover {
+            animation: none;
+            transform: translateY(-15px) scale(1.02);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Card Image */
+        .card-image {
+            height: 220px;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .card-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .tour-card:hover .card-image img {
+            transform: scale(1.1);
+        }
+
+        .card-category {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 8px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: #333;
+        }
+
+        /* Card Content */
+        .card-content {
+            padding: 25px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: #2c3e50;
+        }
+
+        .card-description {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            flex-grow: 1;
+        }
+
+        /* Card Features */
+        .card-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .feature-tag {
+            background: #f0f8ff;
+            border: 1px solid #d1e7ff;
+            border-radius: 15px;
+            padding: 6px 14px;
+            font-size: 0.8rem;
+            color: #3498db;
+            font-weight: 500;
+        }
+
+        /* Card Footer */
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 20px;
+            border-top: 1px solid #eee;
+        }
+
+        .tour-price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #2c3e50;
+        }
+
+        .tour-price span {
+            font-size: 1rem;
+            color: #666;
+            font-weight: 400;
+        }
+
+        .book-now-btn {
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            color: #000;
+            padding: 12px 28px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+            border: none;
+            cursor: pointer;
+        }
+
+        .book-now-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.5);
+        }
+
+        /* Loading More Button */
+        .load-more-container {
+            text-align: center;
+            margin-top: 60px;
+        }
+
+        .load-more-btn {
+            background: linear-gradient(135deg, #6e8efb, #a777e3);
+            color: white;
+            padding: 16px 40px;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(110, 142, 251, 0.3);
+        }
+
+        .load-more-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 30px rgba(110, 142, 251, 0.5);
+        }
+
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            padding: 60px 20px 40px;
+            margin-top: 80px;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+        }
+
+        .footer-section h3 {
+            color: white;
+            font-size: 1.3rem;
+            margin-bottom: 20px;
+        }
+
+        .footer-section p {
+            color: #b0b0c0;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #b0b0c0;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .social-links a:hover {
+            background: #FFD700;
+            color: #000;
+            transform: translateY(-3px);
+        }
+
+        .copyright {
+            text-align: center;
+            color: #b0b0c0;
+            padding-top: 40px;
+            margin-top: 40px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .cards-grid {
+                grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+            }
+        }
+
+        @media (max-width: 768px) {
+            .main-navigation {
+                padding: 15px 20px;
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .nav-links {
+                gap: 10px;
+                flex-wrap: wrap;
+                justify-content: center;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+
+            .section-title {
+                font-size: 2.2rem;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+                margin: 0 auto;
+            }
+
+            .tour-card {
+                height: auto;
+                min-height: 500px;
+            }
+
+            .filter-container {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .filter-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .section-title {
+                font-size: 1.8rem;
+            }
+
+            .card-content {
+                padding: 20px;
+            }
+
+            .card-title {
+                font-size: 1.3rem;
+            }
+
+            .tour-price {
+                font-size: 1.5rem;
+            }
+
+            .book-now-btn {
+                padding: 10px 20px;
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="main-navigation">
+        <a href="index.html" class="logo">TWV<span>.</span></a>
+        <div class="nav-links">
+            <a href="index.html">Home</a>
+            <a href="#tours" class="active">Tour Packages</a>
+            <a href="#destinations">Destinations</a>
+            <a href="#about">About Us</a>
+            <a href="#contact">Contact</a>
+            <a href="index.html" class="home-btn">
+                <i class="fas fa-home"></i> Back to Home
+            </a>
+        </div>
+    </nav>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <h1 class="hero-title">Explore Our Exclusive Tour Packages</h1>
+        <p class="hero-subtitle">Discover unforgettable experiences with our carefully curated tour packages. From adventure to relaxation, we have something for every traveler.</p>
+    </section> 
+    <!-- Filter Section -->
+    <section class="filter-section">
+        <div class="filter-container">
+            <button class="filter-btn active" data-filter="all">All Tours</button>
+            <button class="filter-btn" data-filter="adventure">Adventure</button>
+            <button class="filter-btn" data-filter="beach">Beach</button>
+            <button class="filter-btn" data-filter="cultural">Cultural</button>
+            <button class="filter-btn" data-filter="luxury">Luxury</button>
+            <button class="filter-btn" data-filter="family">Family</button>
+            <button class="filter-btn" data-filter="wellness">Wellness</button>
+            
+        </div>
+    </section>
+    <!-- Tour Packages Section -->
+    <section class="tour-packages-section" id="tours">
+        <h2 class="section-title">Our Featured Tour Packages</h2>
+        <p class="section-subtitle">All packages include accommodation, guided tours, transportation, and much more</p>
+
+        <div class="cards-grid">
+            <!-- Package 1 -->
+            <div class="tour-card card-bounce" data-category="adventure luxury">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1551632811-561732d1e306?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Mountain Adventure">
+                    <div class="card-category">Adventure</div>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Himalayan Trekking Expedition</h3>
+                    <p class="card-description">Experience the thrill of high-altitude trekking in the majestic Himalayas. Guided tours, experienced sherpas, and breathtaking views await.</p>
+                    <div class="card-features">
+                        <span class="feature-tag">14 Days</span>
+                        <span class="feature-tag">Expert Guides</span>
+                        <span class="feature-tag">All Meals Included</span>
+                    </div>
+                    <div class="card-footer">
+                        <div class="tour-price">$1,299 <span>/person</span></div>
+                        <button class="book-now-btn">Book Now</button>
+                         <header>book now <fieldset disabled="disabled">  </fieldset></header>
+                    </div>
+                </div>
+            </div>
+ 
+            <!-- Package 2 -->
+            <div class="tour-card card-bounce" data-category="beach luxury">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Tropical Beach">
+                    <div class="card-category">Beach</div>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Maldives Paradise Getaway</h3>
+                    <p class="card-description">Relax in overwater bungalows, swim in turquoise waters, and enjoy world-class spa treatments in this tropical paradise.</p>
+                    <div class="card-features">
+                        <span class="feature-tag">7 Days</span>
+                        <span class="feature-tag">Luxury Resort</span>
+                        <span class="feature-tag">All Inclusive</span>
+                    </div>
+                    <div class="card-footer">
+                        <div class="tour-price">$2,499 <span>/person</span></div>
+                        <button class="book-now-btn">Book Now</button>
+                    </div>
+                </div>
+            </div>
+              <!-- Package 3 -->  
+            <div class="tour-card card-bounce" data-category="cultural">
+                <div class="card-image">
+
+                    <img src="https://images.unsplash.com/photo-1528164344705-47542687000d?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Japanese Temple">
+                    <div class="card-category">Cultural</div>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Japanese Heritage Tour</h3>
+                    <p class="card-description">Discover ancient temples, traditional tea ceremonies, and vibrant city life across Japan's most iconic destinations.</p>
+                    <div class="card-features">
+                        <span class="feature-tag">10 Days</span>
+                        <span class="feature-tag">Cultural Immersion</span>
+                        <span class="feature-tag">Local Guides</span>
+                    </div>
+                    <div class="card-footer">
+                        <div class="tour-price">$1,899 <span>/person</span></div>
+                        <button class="book-now-btn">Book Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 4 -->
+            <div class="tour-card card-bounce" data-category="adventure">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1536152471326-642d7276f4f0?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Safari Adventure">
+                    <div class="card-category">Adventure</div>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">African Safari Adventure</h3>
+                    <p class="card-description">Witness the Big Five in their natural habitat, stay in luxury lodges, and experience unforgettable wildlife encounters.</p>
+                    <div class="card-features">
+                        <span class="feature-tag">12 Days</span>
+                        <span class="feature-tag">Wildlife Safari</span>
+                        <span class="feature-tag">Luxury Camping</span>
+                    </div>
+                    <div class="card-footer">
+                        <div class="tour-price">$3,299 <span>/person</span></div>
+                        <button class="book-now-btn">Book Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 5 -->
+            <div class="tour-card card-bounce" data-category="wellness luxury">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1545205597-3d9d02c29597?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Spa Retreat">
+                    <div class="card-category">Wellness</div>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Bali Wellness Retreat</h3>
+                    <p class="card-description">Rejuvenate your mind, body, and soul with daily yoga, meditation, spa treatments, and healthy cuisine in beautiful Bali.</p>
+                    <div class="card-features">
+                        <span class="feature-tag">8 Days</span>
+                        <span class="feature-tag">Daily Yoga</span>
+                        <span class="feature-tag">Spa Included</span>
+                    </div>
+                    <div class="card-footer">
+                        <div class="tour-price">$1,599 <span>/person</span></div>
+                        <button class="book-now-btn">Book Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 6 -->
+            <div class="tour-card card-bounce" data-category="family cultural">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1520250497591-112f2f40a3f4?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="European Tour">
+                    <div class="card-category">Family</div>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">European Discovery Tour</h3>
+                    <p class="card-description">Explore the best of Europe with family-friendly activities, historical sites, and comfortable accommodations across multiple countries.</p>
+                    <div class="card-features">
+                        <span class="feature-tag">15 Days</span>
+                        <span class="feature-tag">Family Friendly</span>
+                        <span class="feature-tag">Multicity</span>
+                    </div>
+                    <div class="card-footer">
+                        <div class="tour-price">$2,899 <span>/person</span></div>
+                        <button class="book-now-btn">Book Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 7 -->
+            <div class="tour-card card-bounce" data-category="adventure">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1468818438311-4bab781ab9b8?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Desert Adventure">
+                    <div class="card-category">Adventure</div>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Dubai Desert Experience</h3>
+                    <p class="card-description">Experience dune bashing, camel rides, traditional Bedouin camps, and luxury desert resorts in the Arabian desert.</p>
+                    <div class="card-features">
+                        <span class="feature-tag">6 Days</span>
+                        <span class="feature-tag">Desert Safari</span>
+                        <span class="feature-tag">Luxury Hotels</span>
+                    </div>
+                    <div class="card-footer">
+                        <div class="tour-price">$1,199 <span>/person</span></div>
+                        <button class="book-now-btn">Book Now</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Package 8 -->
+            <div class="tour-card card-bounce" data-category="cultural luxury">
+                <div class="card-image">
+                    <img src="https://images.unsplash.com/photo-1528181304800-259b08848526?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80" alt="Sri Lanka">
+                    <div class="card-category">Cultural</div>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">Sri Lanka Heritage Tour</h3>
+                    <p class="card-description">Discover ancient temples, tea plantations, wildlife safaris, and pristine beaches in this tropical paradise.</p>
+                    <div class="card-features">
+                        <span class="feature-tag">9 Days</span>
+                        <span class="feature-tag">UNESCO Sites</span>
+                        <span class="feature-tag">Beach Stays</span>
+                    </div>
+                    <div class="card-footer">
+                        <div class="tour-price">$1,499 <span>/person</span></div>
+                        <button class="book-now-btn">Book Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="load-more-container">
+            <button class="load-more-btn">Load More Packages</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>TWV Tours</h3>
+                <p>Creating unforgettable travel experiences since 2010. We specialize in customized tour packages that cater to every traveler's needs.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="#tours">Tour Packages</a></li>
+                    <li><a href="#destinations">Destinations</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-map-marker-alt"></i> 123 Travel Street, Colombo, Sri Lanka</p>
+                <p><i class="fas fa-phone"></i> +94 77 123 4567</p>
+                <p><i class="fas fa-envelope"></i> info@twvtours.com</p>
+                <p><i class="fas fa-clock"></i> Mon - Fri: 9:00 AM - 6:00 PM</p>
+            </div>
+            <div class="footer-section">
+                <h3>Newsletter</h3>
+                <p>Subscribe to our newsletter for the latest travel deals and updates.</p>
+                <div style="margin-top: 20px;">
+                    <input type="email" placeholder="Your Email" style="width: 100%; padding: 12px; border-radius: 5px; border: 1px solid #555; background: rgba(255,255,255,0.1); color: white;">
+                    <button style="width: 100%; padding: 12px; margin-top: 10px; background: #FFD700; color: #000; border: none; border-radius: 5px; font-weight: 600; cursor: pointer;">Subscribe</button>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            &copy; 2025 TWV - The Wanderlust Vacation. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        // Filter functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.filter-btn');
+            const tourCards = document.querySelectorAll('.tour-card');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    const filterValue = this.getAttribute('data-filter');
+                    
+                    // Filter cards
+                    tourCards.forEach(card => {
+                        if (filterValue === 'all') {
+                            card.style.display = 'block';
+                        } else {
+                            const categories = card.getAttribute('data-category').split(' ');
+                            if (categories.includes(filterValue)) {
+                                card.style.display = 'block';
+                            } else {
+                                card.style.display = 'none';
+                            }
+                        }
+                        
+                        // Add bounce animation back to visible cards
+                        if (card.style.display !== 'none') {
+                            card.classList.add('card-bounce');
+                        }
+                    });
+                });
+            });
+            
+            // Book Now button functionality
+            const bookButtons = document.querySelectorAll('.book-now-btn');
+            bookButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const card = this.closest('.tour-card');
+                    const title = card.querySelector('.card-title').textContent;
+                    const price = card.querySelector('.tour-price').textContent;
+                    
+                    alert(`Booking ${title}\nTotal: ${price}\n\nOur team will contact you shortly to complete your booking!`);
+                });
+            });
+            
+            // Load More button functionality
+            const loadMoreBtn = document.querySelector('.load-more-btn');
+            loadMoreBtn.addEventListener('click', function() {
+                alert('Loading more packages...\n(Additional packages would be loaded here in a real implementation)');
+                this.textContent = 'No More Packages Available';
+                this.disabled = true;
+                this.style.opacity = '0.7';
+            });
+            
+            // Add hover effect for cards
+            tourCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.animation = 'none';
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    this.style.animation = '';
+                });
+            });
+        });
+    </script>
+</body>
+</html>
